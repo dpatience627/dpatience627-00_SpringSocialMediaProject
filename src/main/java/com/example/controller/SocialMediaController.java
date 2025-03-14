@@ -9,4 +9,20 @@ package com.example.controller;
  */
 public class SocialMediaController {
 
+
+    // create new account
+
+    // verify account exists
+
+    // create new message
+
+    // get all messages
+
+    // get message given message id
+
+    // delete message given message id
+
+    // update message given message id
+
+    // get all messages given account id
 }
