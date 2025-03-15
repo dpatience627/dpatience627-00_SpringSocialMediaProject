@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.entity.Message;
+import com.example.repository.AccountRepository;
 import com.example.repository.MessageRepository;
 
 public class MessageService {
 
     MessageRepository messageRepository;
+    AccountRepository accountRepository;
 
     @Autowired
     public MessageService(MessageRepository messageRepository) {
@@ -19,7 +21,12 @@ public class MessageService {
 
     // create new message
     public Message createMessage(Message message) {
-        return messageRepository.save(message);
+        System.out.println("SERVICE " + message);
+        if (message.getMessageText() != null && message.getMessageText().length() != 0
+        && message.getMessageText().length() <= 255 && accountRepository.findById(message.getMessageId()).isPresent()) {
+            return messageRepository.save(message);
+        }
+        return null;
     }
 
     // get all messages
@@ -38,8 +45,15 @@ public class MessageService {
     }
 
     // delete message given message id
-    public void deleteMessage(int id) {
-        messageRepository.deleteById(id);
+    public Message deleteMessage(int id) {
+        Optional<Message> optionalMessage = messageRepository.findById(id);
+        if (optionalMessage.isPresent()) {
+            Message deletedMessage = optionalMessage.get();
+            messageRepository.deleteById(id);
+            return deletedMessage;
+        } else {
+            return null;
+        }   
     }
 
     // update message given message id
