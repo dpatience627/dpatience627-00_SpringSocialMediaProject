@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.entity.Account;
+import com.example.entity.Message;
 import com.example.service.AccountService;
 import com.example.service.MessageService;
 
@@ -28,19 +30,27 @@ public class SocialMediaController {
 
     // create new account
     @PostMapping("/register/")
-    public ResponseEntity<Account> postAccount(@RequestBody Account requestBody) {
+    public ResponseEntity<Account> addAccount(@RequestBody Account requestBody) {
         Account newAccount = accountService.addAccount(requestBody);
         return ResponseEntity.ok(newAccount);
     }
 
     // verify account exists
     @PostMapping("/login")
-    public ResponseEntity<Account> postLogin(@RequestBody Account requestBody) {
+    public ResponseEntity<Account> verifyAccount(@RequestBody Account requestBody) {
 
     }
 
     // create new message
     @PostMapping("/messages")
+    public ResponseEntity<Message> createMessage(@RequestBody Message requestBody) {
+        Message newMessage = messageService.createMessage(requestBody);
+        if (newMessage != null) {
+            return ResponseEntity.ok(newMessage);
+        } else {
+            return new ResponseEntity<Message>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     // get all messages
     @GetMapping("/messages")

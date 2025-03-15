@@ -18,7 +18,7 @@ public class MessageService {
     }
 
     // create new message
-    public Message persistGrocery(Message message){
+    public Message createMessage(Message message) {
         return messageRepository.save(message);
     }
 
@@ -43,6 +43,18 @@ public class MessageService {
     }
 
     // update message given message id
+    public Message updateMessage(int id, Message newMessage) {
+        Optional<Message> oldMessage = messageRepository.findById(id);
+        if (oldMessage.isPresent()) {
+            if (oldMessage != null && newMessage.getMessageText().length() != 0 && newMessage.getMessageText().length() <= 255) {
+                Message message = oldMessage.get();
+                message.setMessageId(newMessage.getMessageId());
+                messageRepository.save(message);
+                return newMessage;
+            }
+        }
+        return null;
+    }
 
     // get all messages given account id
 }
