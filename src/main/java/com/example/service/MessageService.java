@@ -61,13 +61,13 @@ public class MessageService {
 
     // update message given message id
     public Message updateMessage(int id, Message newMessage) {
-        Optional<Message> oldMessage = messageRepository.findById(id);
-        if (oldMessage.isPresent()) {
-            if (oldMessage != null && newMessage.getMessageText().length() != 0 && newMessage.getMessageText().length() <= 255) {
-                Message message = oldMessage.get();
-                message.setMessageId(newMessage.getMessageId());
-                messageRepository.save(message);
-                return newMessage;
+        Optional<Message> optionalOldMessage = messageRepository.findById(id);
+        if (optionalOldMessage.isPresent()) {
+            if (optionalOldMessage != null && newMessage.getMessageText().length() != 0 && newMessage.getMessageText().length() <= 255) {
+                Message oldMessage = optionalOldMessage.get();
+                oldMessage.setMessageText(newMessage.getMessageText());
+                
+                return messageRepository.save(oldMessage);
             }
         }
         return null;
@@ -75,7 +75,7 @@ public class MessageService {
 
     // get all messages given account id
     public List<Message> getAllMessagesFromAccount(int id) {
-       // return messageRepository.findAllById((Iterable<Integer>)id);
+       //List<Message> list = messageRepository.findAllById(accountRepository.getById(id));
        return null;
     }
 }
