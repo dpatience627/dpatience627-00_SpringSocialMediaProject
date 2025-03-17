@@ -71,4 +71,7 @@ public class MessageService {
     }
 
     // get all messages given account id
+    public List<Message> getAllMessagesFromAccount(int id) {
+        return messageRepository.findAll();
+    }
 }

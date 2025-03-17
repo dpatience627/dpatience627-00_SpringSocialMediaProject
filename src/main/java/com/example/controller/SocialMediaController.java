@@ -65,25 +65,42 @@ public class SocialMediaController {
     // get message given message id
     @GetMapping("/messages/{message_id}")
     public ResponseEntity<Message> getMessageByID(@RequestBody Message requestBody) {
-        return ResponseEntity.ok(messageService.getMessageByID(requestBody.getMessageId()));
+        Message newMessage = messageService.getMessageByID(requestBody.getMessageId());
+        System.out.println("CONTROLLER " + newMessage);
+        if (newMessage != null) {
+            return ResponseEntity.ok(newMessage);
+        } else {
+            return new ResponseEntity<Message>(HttpStatus.OK);
+        }
     }
 
     // delete message given message id
     @DeleteMapping("messages/{message_id}")
     public ResponseEntity<Message> deleteMessage(@RequestBody Message requestBody) {
-        return ResponseEntity.ok(messageService.deleteMessage(requestBody.getMessageId()));
+        Message newMessage = messageService.deleteMessage(requestBody.getMessageId());
+        System.out.println("CONTROLLER " + newMessage);
+        if (newMessage != null) {
+            return ResponseEntity.ok(newMessage);
+        } else {
+            return new ResponseEntity<Message>(HttpStatus.OK);
+        }
     }
-/*
+
     // update message given message id
     @PatchMapping("messages/{message_id}")
     public ResponseEntity<Message> updateMessage(@RequestBody Message requestBody) {
-    
+        Message newMessage = messageService.updateMessage(requestBody.getMessageId(), requestBody);
+        System.out.println("CONTROLLER " + newMessage);
+        if (newMessage != null) {
+            return ResponseEntity.ok(newMessage);
+        } else {
+            return new ResponseEntity<Message>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     // get all messages given account id
     @GetMapping("/accounts/{account_id}/messages")
     public ResponseEntity<Message> getAllMessagesFromAccount(@RequestBody Message requestBody) {
-    
+        
     }
-    */
 }
