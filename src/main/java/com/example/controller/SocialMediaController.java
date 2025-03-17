@@ -51,7 +51,7 @@ public class SocialMediaController {
     @PostMapping("/messages")
     public ResponseEntity<Message> createMessage(@RequestBody Message requestBody) {
         Message newMessage = messageService.createMessage(requestBody);
-        System.out.println("CONTROLLER " + newMessage);
+        System.err.println("CONTROLLER " + newMessage);
         if (newMessage != null) {
             return ResponseEntity.ok(newMessage);
         } else {

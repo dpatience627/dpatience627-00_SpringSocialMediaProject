@@ -21,11 +21,12 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
+    // && accountRepository.findById(message.getMessageId()).isPresent()
     // create new message
     public Message createMessage(Message message) {
         System.out.println("SERVICE " + message);
         if (message.getMessageText() != null && message.getMessageText().length() != 0
-        && message.getMessageText().length() <= 255 && accountRepository.findById(message.getMessageId()).isPresent()) {
+        && message.getMessageText().length() <= 255) {
             return messageRepository.save(message);
         }
         return null;
