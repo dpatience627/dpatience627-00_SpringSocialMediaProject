@@ -72,6 +72,7 @@ public class MessageService {
 
     // get all messages given account id
     public List<Message> getAllMessagesFromAccount(int id) {
-        return messageRepository.findAll();
+       // return messageRepository.findAllById((Iterable<Integer>)id);
+       return null;
     }
 }
