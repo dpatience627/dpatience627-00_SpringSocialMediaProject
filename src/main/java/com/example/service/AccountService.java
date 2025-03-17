@@ -24,7 +24,6 @@ public class AccountService {
         if (account.getUsername() != null && account.getUsername() != ""
             && account.getPassword().length() >= 4) {
             return accountRepository.save(account);
-            
         }
         return null;
     }
