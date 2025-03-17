@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Account;
 import com.example.entity.Message;
@@ -23,7 +25,7 @@ import com.example.service.MessageService;
  * where applicable as well as the @ResponseBody and @PathVariable annotations. You should
  * refer to prior mini-project labs and lecture materials for guidance on how a controller may be built.
  */
-@Controller
+@RestController
 public class SocialMediaController {
 
     @Autowired
@@ -66,8 +68,8 @@ public class SocialMediaController {
 
     // get message given message id
     @GetMapping("/messages/{message_id}")
-    public ResponseEntity<Message> getMessageByID(@RequestBody Message requestBody) {
-        Message newMessage = messageService.getMessageByID(requestBody.getMessageId());
+    public ResponseEntity<Message> getMessageByID(@PathVariable("message_id") Integer message_id) {
+        Message newMessage = messageService.getMessageByID(message_id);
         System.out.println("CONTROLLER " + newMessage);
         if (newMessage != null) {
             return ResponseEntity.ok(newMessage);
@@ -78,8 +80,8 @@ public class SocialMediaController {
 
     // delete message given message id
     @DeleteMapping("messages/{message_id}")
-    public ResponseEntity<Message> deleteMessage(@RequestBody Message requestBody) {
-        Message newMessage = messageService.deleteMessage(requestBody.getMessageId());
+    public ResponseEntity<Message> deleteMessage(@PathVariable("message_id") Integer message_id) {
+        Message newMessage = messageService.deleteMessage(message_id);
         System.out.println("CONTROLLER " + newMessage);
         if (newMessage != null) {
             return ResponseEntity.ok(newMessage);
@@ -90,8 +92,8 @@ public class SocialMediaController {
 
     // update message given message id
     @PatchMapping("messages/{message_id}")
-    public ResponseEntity<Message> updateMessage(@RequestBody Message requestBody) {
-        Message newMessage = messageService.updateMessage(requestBody.getMessageId(), requestBody);
+    public ResponseEntity<Message> updateMessage(@RequestBody Message requestBody, @PathVariable("message_id") Integer message_id) {
+        Message newMessage = messageService.updateMessage(message_id, requestBody);
         System.out.println("CONTROLLER " + newMessage);
         if (newMessage != null) {
             return ResponseEntity.ok(newMessage);
@@ -102,8 +104,8 @@ public class SocialMediaController {
 
     // get all messages given account id
     @GetMapping("/accounts/{account_id}/messages")
-    public ResponseEntity<List<Message>> getAllMessagesFromAccount(@RequestBody Account requestBody) {
-            List<Message> list = messageService.getAllMessagesFromAccount(requestBody.getAccountId());
+    public ResponseEntity<List<Message>> getAllMessagesFromAccount(@PathVariable("account_id") Integer account_id) {
+            List<Message> list = messageService.getAllMessagesFromAccount(account_id);
             return ResponseEntity.ok(list);
     }
 }
