@@ -21,7 +21,7 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    // && accountRepository.findById(message.getMessageId()).isPresent()
+    // && accountRepository.findById(message.getPostedBy()).isPresent()
     // create new message
     public Message createMessage(Message message) {
         System.out.println("SERVICE " + message);
@@ -75,7 +75,6 @@ public class MessageService {
 
     // get all messages given account id
     public List<Message> getAllMessagesFromAccount(int id) {
-       //List<Message> list = messageRepository.findAllById(accountRepository.getById(id));
-       return null;
+        return null;
     }
 }

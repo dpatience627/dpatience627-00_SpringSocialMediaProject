@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -40,13 +39,18 @@ public class SocialMediaController {
         Account newAccount = accountService.addAccount(requestBody);
         return ResponseEntity.ok(newAccount);
     }
-/*
+
     // verify account exists
     @PostMapping("/login")
     public ResponseEntity<Account> verifyAccount(@RequestBody Account requestBody) {
-
+        Account verifiedAccount = accountService.verifyAccount(requestBody);
+        if (verifiedAccount != null) {
+            return ResponseEntity.ok(verifiedAccount);
+        } else {
+            return new ResponseEntity<Account>(HttpStatus.UNAUTHORIZED);
+        }
     }
-*/
+
     // create new message
     @PostMapping("/messages")
     public ResponseEntity<Message> createMessage(@RequestBody Message requestBody) {

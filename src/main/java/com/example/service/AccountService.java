@@ -1,7 +1,6 @@
 package com.example.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Account;
@@ -22,11 +21,18 @@ public class AccountService {
     // create new account
     public Account addAccount( Account account) {
         if (account.getUsername() != null && account.getUsername() != ""
-            && account.getPassword().length() >= 4) {
+            && account.getPassword().length() >= 4 && accountRepository.findById(account.getAccountId()) != null) {
             return accountRepository.save(account);
         }
         return null;
     }
 
+    // && accountRepository.findByPassword(account.getPassword()) != null
     // verify account exists
+    public Account verifyAccount(Account account) {
+        if(accountRepository.existsById(account.getAccountId())) {
+            return account;
+        }
+        return null;
+    }
 }
