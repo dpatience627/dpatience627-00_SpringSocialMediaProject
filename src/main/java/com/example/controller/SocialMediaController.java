@@ -84,25 +84,25 @@ public class SocialMediaController {
 
     // delete message given message id
     @DeleteMapping("messages/{message_id}")
-    public ResponseEntity<Message> deleteMessage(@PathVariable("message_id") Integer message_id) {
+    public ResponseEntity<String> deleteMessage(@PathVariable("message_id") Integer message_id) {
         int rowsAffected = messageService.deleteMessage(message_id);
         System.out.println("CONTROLLER " + rowsAffected);
-        if (rowsAffected != 0) {
-            return new ResponseEntity<Message>(HttpStatus.OK);
+        if (rowsAffected == 1) {
+            return ResponseEntity.status(200).body("1");
         } else {
-            return new ResponseEntity<Message>(HttpStatus.OK);
+            return ResponseEntity.status(200).body("");
         }
     }
 
     // update message given message id
     @PatchMapping("messages/{message_id}")
-    public ResponseEntity<Message> updateMessage(@RequestBody Message requestBody, @PathVariable("message_id") Integer message_id) {
+    public ResponseEntity<String> updateMessage(@RequestBody Message requestBody, @PathVariable("message_id") Integer message_id) {
         Integer rowsAffected = messageService.updateMessage(message_id, requestBody);
         System.out.println("CONTROLLER " + rowsAffected);
-        if (rowsAffected != 0) {
-            return new ResponseEntity<Message>(HttpStatus.OK);
+        if (rowsAffected == 1) {
+            return ResponseEntity.status(200).body("1");
         } else {
-            return new ResponseEntity<Message>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(400).body("");
         }
     }
 
