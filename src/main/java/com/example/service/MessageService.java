@@ -15,6 +15,7 @@ public class MessageService {
 
     @Autowired
     MessageRepository messageRepository;
+    
     @Autowired
     AccountRepository accountRepository;
 
@@ -23,7 +24,6 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    //
     // create new message
     public Message createMessage(Message message) {
         System.out.println("SERVICE " + message);
