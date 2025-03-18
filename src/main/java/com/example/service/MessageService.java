@@ -1,4 +1,5 @@
 package com.example.service;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -6,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import com.example.entity.Account;
 import com.example.entity.Message;
 import com.example.repository.AccountRepository;
 import com.example.repository.MessageRepository;
@@ -75,6 +77,13 @@ public class MessageService {
 
     // get all messages given account id
     public List<Message> getAllMessagesFromAccount(int id) {
-        return messageRepository.findAll();
+        List<Message> list = messageRepository.findAll();
+        ArrayList<Message> filteredList = new ArrayList<>();
+        for (Message message : list) {
+            if (message.getPostedBy() == id) {
+                filteredList.add(message);
+            }
+        }
+        return filteredList;
     }
 }
