@@ -22,16 +22,16 @@ public class AccountService {
     // create new account
     public Account addAccount( Account account) {
         if (account.getUsername() != null && account.getUsername() != "" && account.getPassword().length() >= 4 
-        && accountRepository.findByUsername(account.getUsername()) != null) {
+        && accountRepository.findByUsername(account.getUsername()) == null) {
             return accountRepository.save(account);
         }
         return null;
     }
 
-    // && accountRepository.findByPassword(account.getPassword()) != null
+    //
     // verify account exists
     public Account verifyAccount(Account account) {
-        if(accountRepository.existsById(account.getAccountId())) {
+        if(accountRepository.findByUsername(account.getUsername()) != null && accountRepository.findByPassword(account.getPassword()) != null) {
             return account;
         }
         return null;
