@@ -15,7 +15,7 @@ public class MessageService {
 
     @Autowired
     MessageRepository messageRepository;
-    
+
     @Autowired
     AccountRepository accountRepository;
 
@@ -50,29 +50,27 @@ public class MessageService {
     }
 
     // delete message given message id
-    public Message deleteMessage(int id) {
+    public Integer deleteMessage(int id) {
         Optional<Message> optionalMessage = messageRepository.findById(id);
         if (optionalMessage.isPresent()) {
-            Message deletedMessage = optionalMessage.get();
             messageRepository.deleteById(id);
-            return deletedMessage;
+            return 1;
         } else {
-            return null;
+            return 0;
         }   
     }
 
     // update message given message id
-    public Message updateMessage(int id, Message newMessage) {
+    public Integer updateMessage(int id, Message newMessage) {
         Optional<Message> optionalOldMessage = messageRepository.findById(id);
         if (optionalOldMessage.isPresent()) {
             if (optionalOldMessage != null && newMessage.getMessageText().length() != 0 && newMessage.getMessageText().length() <= 255) {
                 Message oldMessage = optionalOldMessage.get();
                 oldMessage.setMessageText(newMessage.getMessageText());
-                
-                return messageRepository.save(oldMessage);
+                return 1;
             }
         }
-        return null;
+        return 0;
     }
 
     // get all messages given account id
