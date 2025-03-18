@@ -13,7 +13,9 @@ import com.example.repository.MessageRepository;
 @Service
 public class MessageService {
 
+    @Autowired
     MessageRepository messageRepository;
+    @Autowired
     AccountRepository accountRepository;
 
     @Autowired
@@ -21,12 +23,12 @@ public class MessageService {
         this.messageRepository = messageRepository;
     }
 
-    // && accountRepository.findById(message.getPostedBy()).isPresent()
+    //
     // create new message
     public Message createMessage(Message message) {
         System.out.println("SERVICE " + message);
         if (message.getMessageText() != null && message.getMessageText().length() != 0
-        && message.getMessageText().length() <= 255) {
+        && message.getMessageText().length() <= 255 && accountRepository.findById(message.getPostedBy()).isPresent()) {
             return messageRepository.save(message);
         }
         return null;

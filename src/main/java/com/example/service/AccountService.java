@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @Service
 public class AccountService {
 
+    @Autowired
     AccountRepository accountRepository;
 
     @Autowired
@@ -20,11 +21,12 @@ public class AccountService {
     //  && accountRepository.findByUsername(account.getUsername()) != null
     // create new account
     public Account addAccount( Account account) {
-        if (account.getUsername() != null && account.getUsername() != ""
-            && account.getPassword().length() >= 4 && accountRepository.findById(account.getAccountId()) != null) {
-            return accountRepository.save(account);
-        }
-        return null;
+        return accountRepository.save(account);
+        // if (account.getUsername() != null && account.getUsername() != ""
+        //     && account.getPassword().length() >= 4 && accountRepository.findById(account.getAccountId()) != null) {
+        //     return accountRepository.save(account);
+        // }
+        // return null;
     }
 
     // && accountRepository.findByPassword(account.getPassword()) != null
