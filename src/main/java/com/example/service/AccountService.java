@@ -18,22 +18,20 @@ public class AccountService {
         this.accountRepository = accountRepository;
     }
 
-    // 
     // create new account
     public Account addAccount( Account account) {
-        if (account.getUsername() != null && account.getUsername() != "" && account.getPassword().length() >= 4 
-        && accountRepository.findByUsername(account.getUsername()) == null) {
-            return accountRepository.save(account);
-        }
+        // if (account.getUsername() != null && account.getUsername() != "" && account.getPassword().length() >= 4 
+        // && accountRepository.findByUsername(account.getUsername()) == null) {
+        //     return accountRepository.save(account);
+        // }
         return null;
     }
 
-    //
     // verify account exists
     public Account verifyAccount(Account account) {
-        if(accountRepository.findByUsername(account.getUsername()) != null && accountRepository.findByPassword(account.getPassword()) != null) {
-            return account;
-        }
+        // if(accountRepository.findByUsername(account.getUsername()) != null && accountRepository.findByPassword(account.getPassword()) != null) {
+        //     return account;
+        // }
         return null;
     }
 }
