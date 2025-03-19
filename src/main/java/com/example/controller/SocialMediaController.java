@@ -38,16 +38,15 @@ public class SocialMediaController {
     @PostMapping("/register")
     public ResponseEntity<Account> addAccount(@RequestBody Account requestBody) {
         Account newAccount = new Account();
-    try {
-        newAccount = accountService.addAccount(requestBody);
-    } catch (IllegalArgumentException e) {
-        // catch error
-        System.out.println(e);
-        return new ResponseEntity<Account>(HttpStatus.BAD_REQUEST);
-    } catch (DuplicateUsernameException e) {
-        System.out.println(e);
-        return new ResponseEntity<Account>(HttpStatus.CONFLICT);
-    }
+        try {
+            newAccount = accountService.addAccount(requestBody);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+            return new ResponseEntity<Account>(HttpStatus.BAD_REQUEST);
+        } catch (DuplicateUsernameException e) {
+            System.out.println(e);
+            return new ResponseEntity<Account>(HttpStatus.CONFLICT);
+        }
         return ResponseEntity.ok(newAccount);
     }
 

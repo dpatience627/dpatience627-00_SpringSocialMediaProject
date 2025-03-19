@@ -21,20 +21,16 @@ public class AccountService {
 
     // create new account
     public Account addAccount( Account account)  throws IllegalArgumentException, DuplicateUsernameException {
-            if (accountRepository.findByUsername(account.getUsername()) != null) {
-                // throw error
-                throw new DuplicateUsernameException();
-            }
-
+        if (accountRepository.findByUsername(account.getUsername()) != null) {
+            throw new DuplicateUsernameException();
+        }
         if (account.getUsername() != null && account.getUsername() != "" && account.getPassword().length() >= 4) {
             return accountRepository.save(account);
         } else {
-            // throw error
             throw new IllegalArgumentException();
         }
     }
 
-    //&& 
     // verify account exists
     public Account verifyAccount(Account account) {
         Account uniqueAccount = accountRepository.findByUsername(account.getUsername());
