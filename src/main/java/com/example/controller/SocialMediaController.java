@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.entity.Account;
 import com.example.entity.Message;
+import com.example.exception.DuplicateUsernameException;
 import com.example.service.AccountService;
 import com.example.service.MessageService;
 
@@ -34,9 +35,19 @@ public class SocialMediaController {
     private MessageService messageService;
 
     // create new account
-    @PostMapping("/register/")
+    @PostMapping("/register")
     public ResponseEntity<Account> addAccount(@RequestBody Account requestBody) {
-        Account newAccount = accountService.addAccount(requestBody);
+        Account newAccount = new Account();
+    try {
+        newAccount = accountService.addAccount(requestBody);
+    } catch (IllegalArgumentException e) {
+        // catch error
+        System.out.println(e);
+        return new ResponseEntity<Account>(HttpStatus.BAD_REQUEST);
+    } catch (DuplicateUsernameException e) {
+        System.out.println(e);
+        return new ResponseEntity<Account>(HttpStatus.CONFLICT);
+    }
         return ResponseEntity.ok(newAccount);
     }
 

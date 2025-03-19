@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.entity.Account;
+import com.example.exception.DuplicateUsernameException;
 import com.example.repository.AccountRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -19,19 +20,27 @@ public class AccountService {
     }
 
     // create new account
-    public Account addAccount( Account account) {
-        // if (account.getUsername() != null && account.getUsername() != "" && account.getPassword().length() >= 4 
-        // && accountRepository.findByUsername(account.getUsername()) == null) {
-        //     return accountRepository.save(account);
-        // }
-        return null;
+    public Account addAccount( Account account)  throws IllegalArgumentException, DuplicateUsernameException {
+            if (accountRepository.findByUsername(account.getUsername()) != null) {
+                // throw error
+                throw new DuplicateUsernameException();
+            }
+
+        if (account.getUsername() != null && account.getUsername() != "" && account.getPassword().length() >= 4) {
+            return accountRepository.save(account);
+        } else {
+            // throw error
+            throw new IllegalArgumentException();
+        }
     }
 
+    //&& 
     // verify account exists
     public Account verifyAccount(Account account) {
-        // if(accountRepository.findByUsername(account.getUsername()) != null && accountRepository.findByPassword(account.getPassword()) != null) {
-        //     return account;
-        // }
+        Account uniqueAccount = accountRepository.findByUsername(account.getUsername());
+        if(uniqueAccount != null && uniqueAccount.getPassword().equals(account.getPassword())) {
+            return uniqueAccount;
+        }
         return null;
     }
 }
